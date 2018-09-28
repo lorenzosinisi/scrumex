@@ -1,0 +1,30 @@
+<h2>Listing Repositories</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Owner</th>
+      <th>Github</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for repository <- @repositories do %>
+    <tr>
+      <td><%= repository.name %></td>
+      <td><%= repository.owner %></td>
+      <td><%= repository.github_id %></td>
+
+      <td class="text-right">
+        <span><%= link "Show", to: repository_path(@conn, :show, repository), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Edit", to: repository_path(@conn, :edit, repository), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Delete", to: repository_path(@conn, :delete, repository), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Repository", to: repository_path(@conn, :new) %></span>

@@ -1,0 +1,23 @@
+<h2>Show Repository</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @repository.name %>
+  </li>
+
+  <li>
+    <strong>Owner:</strong>
+    <%= @repository.owner %>
+  </li>
+
+  <li>
+    <strong>Github:</strong>
+    <%= @repository.github_id %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: repository_path(@conn, :edit, @repository) %></span>
+<span><%= link "Back", to: repository_path(@conn, :index) %></span>

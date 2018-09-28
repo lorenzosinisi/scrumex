@@ -1,0 +1,62 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= label f, :name, class: "control-label" %>
+    <%= text_input f, :name, class: "form-control" %>
+    <%= error_tag f, :name %>
+  </div>
+  
+  <%= if @repos do %>
+    <div class="form-group">
+      <%= label f, "Choose repos to include", class: "control-label" %>
+      <%= multiple_select f, :repositories, Enum.map(@repos, fn(repo) -> {"#{repo.owner}/#{repo.name}", "#{repo.owner}/#{repo.name}"} end), class: "form-control" %>
+    </div>
+  <% end %>
+
+    <div class="row">
+    <div class="col-xs-8">
+      <h4>Team Members</h4>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div id="members">
+      <%= error_tag f, :team_emails %>
+      <%= for email <- @project.team_emails || [] do %>
+        <div class="member row">
+          <div class="col-xs-10">
+            <input type="text" class="form-control" placeholder="member email" name="project[team_emails][]" value="<%= email %>">
+          </div>
+          <div class="col-xs-2">
+            <a class="btn btn-danger remove-member">Remove</a>
+          </div>
+          <hr>
+        </div>
+      <% end %>
+
+      <div class="member row">
+        <div class="col-xs-10">
+          <input type="text" class="form-control" placeholder="member email" name="project[team_emails][]">
+        </div>
+        <div class="col-xs-2">
+          <a class="btn btn-danger remove-member">Remove</a>
+        </div>
+        <hr>
+      </div>
+    
+    </div>
+
+  </div>
+  <div class="pull-left">
+    <a id="add-member" class="btn btn-primary">Add by e-mail</a>
+  </div>
+
+  <div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>

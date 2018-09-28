@@ -1,0 +1,12 @@
+<div class="access-box" style="margin: auto; max-width: 500px;">
+  <span class="logo"></span>
+  <br />
+  <br />
+  <br />
+  <center>
+    <a class="btn btn-primary" href="/auth/github"> Login with GitHub </a> or
+    <a class="btn btn-default" href="/sessions/new"> Login with password </a>
+    <p id="alert-phoenix" class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+    <p id="alert-phoenix" class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+  </center>
+</div>

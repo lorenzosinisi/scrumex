@@ -1,0 +1,10 @@
+<div class="access-box" style="margin: auto; max-width: 500px;">
+  <span class="logo"></span>
+  <h3><%= dgettext "coherence", "Register an Account" %></h3>
+
+  <%= render "form.html", changeset: @changeset,
+                        label: dgettext("coherence", "Register"), required: [required: ""],
+                        action: registration_path(@conn, :create) %>
+  <p id="alert-phoenix" class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+  <p id="alert-phoenix" class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+</div>

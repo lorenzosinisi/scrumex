@@ -1,0 +1,7 @@
+<div class="story-header">
+  <h2>New Sprint</h2>
+
+  <%= render "form.html", Map.put(assigns, :action, list_path(@conn, :create, @project)) %>
+
+  <span><%= link "Back", to: list_path(@conn, :index, @project) %></span>
+</div>

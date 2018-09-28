@@ -1,0 +1,13 @@
+<div>
+  <p><%= dgettext "coherence", "Hello %{name}!", name: @name %><p>
+  <p>
+    <%= "A new comment has been added to '#{@story_name}'" %>
+  </p>
+  <p>
+   <%= "#{@comment_body}" %>
+  </p>
+   <p>
+    <a href="<%= @url %>"><%= dgettext "coherence", "Read more" %></a>
+  </p>
+  <p>Scrumex.com</p>
+</div>

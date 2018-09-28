@@ -1,0 +1,52 @@
+<div class="story-header">
+  <h2>Story Points for "<%= @poll.title %>"
+  <%= if Scrumpointer.Web.Poll.can_close?(@poll, @conn) do %>
+   <%= link "#{if (@poll.closed ==  true), do: 'Open', else: 'Close'}", to: "#", class: "pull-right btn btn-primary close_poll" %>
+  <% end %>
+  <br />
+
+  <%= @project.name %>
+
+  </h2>
+  <input type="hidden" id="poll-id" value="<%= @poll.id %>" data-closed="<%= @poll.closed %>">
+
+  <br />
+  <em>Share URL:</em><input type="text" class="form-control" value ="<%= @conn.scheme %>://<%= @conn.host <> @conn.request_path %>">
+  <br />
+  <strong>Consensus:</strong>
+  <div id="consensus_<%= @poll.id %>">
+  <%= if Scrumpointer.Web.Poll.consensus?(@poll) do %>
+    Reached
+  <% else %>
+    Not reached
+  <% end %>
+  </div>
+</div>
+<div>
+  <%= for entry <- Enum.sort(@poll.entries, &(&1.inserted_at <= &2.inserted_at))  do %>
+    <div class="entry card" data-entry-id="<%= entry.id %>">
+      <div class="">
+        <h3 class="card-title"><%= entry.title %></h3>
+      <div class="card-body">
+        
+        <p class="card-text vote-data">
+          <span class="votes"><%= Scrumpointer.Web.get_entry_vote_count(entry) %></span> vote(s)
+        </p>
+        <div class="voters vote-data" style="display: none;">
+          <%= Scrumpointer.Web.Entry.voters(entry) %>
+        </div>
+
+        <hr>
+      </div>
+    </div>
+      <%= if @poll.closed do %>      
+        <button disabled  data-background_color="#337ab7" data-background_active="#5cb85c" class="btn btn-primary vote" href="#">Vote</a>
+      <% else %>
+        <button class="btn btn-primary vote" data-background_color="#337ab7" data-background_active="#5cb85c"  href="#">Vote</a>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+</div>
+
+

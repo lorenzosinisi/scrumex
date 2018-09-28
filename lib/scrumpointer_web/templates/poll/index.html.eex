@@ -1,0 +1,31 @@
+<div class="story-header">
+
+<h2>Listing Stories</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Voted</th>
+      <th>Points</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for poll <- @polls do %>
+    <tr>
+      <td><%= poll.title %></td>
+      <td><%= if poll.closed, do: "Yes", else: "No" %></td>
+      <td><%= Scrumpointer.Web.Poll.story_points(poll) %></td>
+        <td class="text-right">
+          <span><%= link "Show", to: poll_path(@conn, :show, @project, poll), class: "btn btn-default btn-xs" %></span>
+          <span><%= link "Edit", to: poll_path(@conn, :edit, @project, poll), class: "btn btn-default btn-xs" %></span>
+          <span><%= link "Delete", to: poll_path(@conn, :delete, @project, poll), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+        </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Story", to: poll_path(@conn, :new, @project), class: "btn btn-success pull-right" %></span>
+</div>

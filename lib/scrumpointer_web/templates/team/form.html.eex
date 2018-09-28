@@ -1,0 +1,55 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= label f, :name, class: "control-label" %>
+    <%= text_input f, :name, class: "form-control" %>
+    <%= error_tag f, :name %>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-8">
+      <h4>Team Members</h4>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div id="members">
+      <%= error_tag f, :member_emails %>
+      <%= for email <- @member_emails do %>
+        <div class="member row">
+          <div class="col-xs-10">
+            <input type="text" class="form-control" placeholder="member email" name="team[member_emails][]" value="<%= email %>">
+          </div>
+          <div class="col-xs-2">
+            <a class="btn btn-danger remove-member">Remove</a>
+          </div>
+          <hr>
+        </div>
+      <% end %>
+
+      <div class="member row">
+        <div class="col-xs-10">
+          <input type="text" class="form-control" placeholder="member email" name="team[member_emails][]">
+        </div>
+        <div class="col-xs-2">
+          <a class="btn btn-danger remove-member">delete</a>
+        </div>
+        <hr>
+      </div>
+    
+    </div>
+
+  </div>
+  <div class="pull-left">
+    <a id="add-member" class="btn btn-primary">Add e-mail</a>
+  </div>
+  
+  <div class="form-group">
+    <%= submit "Save", class: "btn btn-success pull-right" %>
+  </div>
+<% end %>

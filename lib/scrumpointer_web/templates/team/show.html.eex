@@ -1,0 +1,18 @@
+<div class="story-header">
+
+  <h2>Team <%= @team.name %></h2>
+  
+  <strong>Members:</strong>
+  <ul>
+  
+  <%= for email <- @team.member_emails do %>
+    <li>
+      <strong><%= email %></strong>
+    </li>
+  <% end %>
+  </ul>
+  <%= if Scrumpointer.Web.Policy.can_edit?(@team, @conn.assigns[:current_user]) do %>
+    <span><%= link "Edit", to: team_path(@conn, :edit, @team) %></span>
+  <% end %>
+  <span><%= link "Back", to: team_path(@conn, :index) %></span>
+</div>

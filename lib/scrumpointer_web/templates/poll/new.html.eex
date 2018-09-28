@@ -1,0 +1,7 @@
+<div class="story-header">
+
+  <h2>New Story</h2>
+  <%= render "form.html", Map.put(assigns, :action, poll_path(@conn, :create, @project)) %>
+
+  <span><%= link "Back", to: poll_path(@conn, :index, @project) %></span>
+</div>

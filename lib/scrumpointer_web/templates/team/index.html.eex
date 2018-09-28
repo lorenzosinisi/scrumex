@@ -1,0 +1,29 @@
+<div class="story-header">
+  <h2>Teams</h2>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Members #</th>
+      </tr>
+    </thead>
+    <tbody>
+  <%= for team <- @teams do %>
+      <tr>
+        <td><%= team.name %></td>
+        <td><%= Enum.count(team.member_emails) %></td>
+        <%= if Scrumpointer.Web.Policy.can_edit?(team, @conn.assigns[:current_user]) do %>
+          <td class="text-right">
+            <span><%= link "Show", to: team_path(@conn, :show, team), class: "btn btn-default btn-xs" %></span>
+            <span><%= link "Edit", to: team_path(@conn, :edit, team), class: "btn btn-default btn-xs" %></span>
+            <span><%= link "Delete", to: team_path(@conn, :delete, team), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+          </td>
+        <% end %>
+      </tr>
+  <% end %>
+    </tbody>
+  </table>
+
+  <span><%= link "New Team", to: team_path(@conn, :new), class: "btn btn-success pull-right" %></span>
+</div>

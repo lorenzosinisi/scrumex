@@ -1,0 +1,23 @@
+<h2>Show Project</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @project.name %>
+  </li>
+
+  <strong>Members:</strong>
+  <ul>
+  
+  <%= for email <- @project.team_emails do %>
+    <li>
+      <strong><%= email %></strong>
+    </li>
+  <% end %>
+  </ul>
+
+</ul>
+
+<span><%= link "Edit", to: project_path(@conn, :edit, @project) %></span>
+<span><%= link "Back", to: project_path(@conn, :index) %></span>

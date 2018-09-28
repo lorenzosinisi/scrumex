@@ -1,0 +1,47 @@
+<div class="story-header">
+  <h2><%= @list.type %>: <%= @list.name %></h2>
+
+  <ul>
+    <li>
+      <strong>Duration:</strong>
+      <%= @list.duration %>
+    </li>
+
+    <li>
+      <strong>Points:</strong>
+      <%= Scrumpointer.Web.List.story_points(@list) %>
+    </li>
+  </ul>
+
+  <h2>Stories</h2>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Closed</th>
+        <th>Points</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+  <%= for poll <- Enum.sort(@list.polls, &(&1.inserted_at <= &2.inserted_at))  do %>
+      <tr>
+        <td><%= poll.title %></td>
+        <td><%= poll.closed %></td>
+        <td><%= Scrumpointer.Web.Poll.story_points(poll) %></td>
+        <td class="text-right">
+          <%= if Scrumpointer.Web.Policy.can_edit?(poll, @conn.assigns[:current_user]) do %>
+            <span><%= link "Edit", to: poll_path(@conn, :edit, @project, poll), class: "btn btn-default btn-xs" %></span>
+          <% end %>
+          <span><%= link "Show", to: poll_path(@conn, :show, @project, poll), class: "btn btn-default btn-xs" %></span>
+        </td>
+      </tr>
+  <% end %>
+    </tbody>
+  </table>
+  <%= if Scrumpointer.Web.Policy.can_edit?(@list, @conn.assigns[:current_user]) do %>
+    <span><%= link "Edit", to: list_path(@conn, :edit, @project, @list) %></span>
+  <% end %>
+  <span><%= link "Back", to: list_path(@conn, :index, @project) %></span>
+</div>

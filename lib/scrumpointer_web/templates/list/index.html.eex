@@ -1,0 +1,36 @@
+<div class="story-header">
+  <span><%= link "New Sprint", to: list_path(@conn, :new, @project) %></span>
+
+  <h2>Listing Sprints</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Duration</th>
+        <th>Type</th>
+        <th>Points</th>
+
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+  <%= for list <- @lists do %>
+      <tr>
+        <td><%= list.name %></td>
+        <td><%= list.duration %></td>
+        <td><%= list.type %></td>
+        <td><%= Scrumpointer.Web.List.story_points(list) %></td>
+        
+        <td class="text-right">
+          <span><%= link "Show", to: list_path(@conn, :show, @project, list), class: "btn btn-default btn-xs" %></span>
+          <%= if Scrumpointer.Web.Policy.can_edit?(list, @conn.assigns[:current_user]) do %>
+            <span><%= link "Edit", to: list_path(@conn, :edit, @project, list), class: "btn btn-default btn-xs" %></span>
+          <span><%= link "Delete", to: list_path(@conn, :delete, @project, list), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+          <% end %>
+        </td>
+      </tr>
+  <% end %>
+    </tbody>
+  </table>
+
+</div>
