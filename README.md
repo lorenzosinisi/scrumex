@@ -1,11 +1,19 @@
 # Scrumex - online tool for management of scrum teams.
-Hosted version: [`https://scrumex.com`](https://scrumex.com/?ref=github)
+Hosted version: [`https://scrumex.com`](https://scrum-ex.com/?ref=github)
 
+Scrumex.com is an open source web app for agile teams that use Scrum. It allows the creation of teams and stories to  manage your scrum process in the simplest possible way.
 
-Scrumpointer is an open source web app for agile teams. It allows the creation of teams and polls to  manage your scrum process in the simplest way possible.
+## Features
 
-The scrum master creates stories and sends the link to the rest of the team that can vote until the story is open.
+ - create and edit stories
+ - manage and give priority to the stories in your burndownchart
+ - create sprints
+ - assign stories to yourself
+ - comment on stories
+ - add and manage team members for a project
+ - mention team members in comments
 
+## Tech
 
 `Erlang/OTP 19`
 
@@ -13,6 +21,12 @@ The scrum master creates stories and sends the link to the rest of the team that
 
 `Phoenix ~> 1.3.0`
 
+`React/Redux`
+
+`Postgres 10.3`
+
+
+## Development
 
 To start your web server:
 
@@ -24,10 +38,13 @@ To start your web server:
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-Todo: [`list here`](https://github.com/lorenzosinisi/scrumpointer/issues)
+## Deployment
 
-To deploy:
-
-* Make sure you can ssh deploy@scrumex.com
+* Make sure you can ssh root@scrumex.com
 * Run `mix edeliver build release --branch="master"` to build the new release
 * Run `mix edeliver deploy release to production --branch="master"` to deploy the new release
+
+## TODO
+
+ - write more tests
+ - cleanup the code from experimentation (there is a mix of business logic in contexts and elsewhere)
