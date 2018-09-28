@@ -1,7 +1,7 @@
 # Scrumex - online tool for management of scrum teams.
 ![logo-scrumex-free](https://user-images.githubusercontent.com/3610215/46209067-fd45fd80-c32c-11e8-8a27-2bb88e81221c.png)
 
-Hosted version: [`https://scrumex.com`](https://scrum-ex.com/?ref=github)
+Hosted version: [`https://scrum-ex.com`](https://scrum-ex.com/?ref=github)
 
 Scrumex.com is an open source web app for agile teams that use Scrum. It allows the creation of teams and stories to  manage your scrum process in the simplest possible way.
 
