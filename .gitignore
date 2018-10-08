@@ -2,6 +2,7 @@
 /_build
 /db
 /deps
+/.deliver
 /*.ez
 
 .prod.secret.exs
