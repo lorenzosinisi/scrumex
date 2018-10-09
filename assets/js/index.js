@@ -15,6 +15,7 @@ import 'phoenix_html'
 import { Poll } from './poll'
 import { Team } from './team'
 import { ChannelPoll } from './channel_poll'
+import { StripeProvider } from 'react-stripe-elements';
 
 // Import local files
 //
@@ -67,7 +68,9 @@ if (document.getElementById('app')) {
     <Provider store={store}>
       <ConnectedRouter history={history}>
         <MuiThemeProvider theme={theme}>
-          <App />
+          <StripeProvider apiKey="pk_test_BJHJPwX8fY5S4ExzWgrHytrj">
+            <App />
+          </StripeProvider>
         </MuiThemeProvider>
       </ConnectedRouter>
     </Provider>

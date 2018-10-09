@@ -5,7 +5,16 @@ import { compose } from 'recompose'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { withStyles } from 'material-ui/styles'
+import Paper from 'material-ui/Paper';
+import Typography from 'material-ui/Typography';
 import WithExternalLinks from '../hocs/WithExternalLinks'
+
+import {
+  CardElement,
+  StripeProvider,
+  Elements,
+  injectStripe
+} from 'react-stripe-elements';
 
 import {
   actionGetRepos,
@@ -35,16 +44,36 @@ import {
 } from '../selectors/showProjectSelector'
 
 
+const callStripeApi = (payload) => {
+  this.props.updateProject(this.state)
+}
+
 const styles = theme => ({
   main: theme.mixins.gutters({
-    width: '98%',
-    maxWidth: theme.palette.centeredColumn.maxWidth,
+    width: '100%',
+    marginTop: theme.spacing.unit * 3,
+    maxWidth: 1200,
     margin: '0 auto',
-    paddingTop: 16,
-    paddingBottom: 16,
-    marginTop: theme.spacing.unit
-  })
+  }),
+  projectBilling: {
+    padding: 30,
+  }
 })
+
+class _CardForm extends Component {
+  render() {
+    return (
+      <form onSubmit={(e) => {
+          e.preventDefault()
+          this.props.stripe.createToken().then(callStripeApi)
+        }}>
+        <CardElement />
+        <button>Pay</button>
+      </form>
+    )
+  }
+}
+const CardForm = injectStripe(_CardForm)
 
 class ProjectEdit extends Component {
   static propTypes = {
@@ -140,25 +169,35 @@ class ProjectEdit extends Component {
 
   render () {
     let { name, collaborators, repositories } = this.state
-    const { classes: { main }, userRepos } = this.props
+    const { classes: { main, projectBilling }, userRepos } = this.props
     if (!this.props.project.id) { return <div /> }
     return (
       <div className={main}>
-        <ProjectForm
-          title="Edit Project"
-          name={name}
-          handleCreateProject={this.handleUpdateProject}
-          handleChange={this.handleChange}
-          userRepos={userRepos}
-          handleAddrepos={this.handleAddrepos}
-          handleRemoverepos={this.handleRemoverepos}
-          handleAddEmail={this.handleAddEmail}
-          handleRemoveEmail={this.handleRemoveEmail}
-          repos={repositories}
-          collaborators={collaborators}
-          handleChangeEmail={this.handleChangeEmail}
-          buttonTitle={"Save"}
-        />
+        <Paper>
+          <ProjectForm
+            title="Change name:"
+            name={name}
+            handleCreateProject={this.handleUpdateProject}
+            handleChange={this.handleChange}
+            userRepos={userRepos}
+            handleAddrepos={this.handleAddrepos}
+            handleRemoverepos={this.handleRemoverepos}
+            handleAddEmail={this.handleAddEmail}
+            handleRemoveEmail={this.handleRemoveEmail}
+            repos={repositories}
+            collaborators={collaborators}
+            handleChangeEmail={this.handleChangeEmail}
+            buttonTitle={"Save"}
+          />
+        </Paper>
+        <Paper className={projectBilling}>
+          <Typography type='headline'>
+            Payment details:
+          </Typography>
+          <Elements>
+            <CardForm />
+          </Elements>
+        </Paper>
       </div>
     )
   }
@@ -180,7 +219,6 @@ function mapDispatchToProps (dispatch) {
     updateProject: (data) => dispatch(actionProject.update(data)),
   }
 }
-
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   withStyles(styles),
