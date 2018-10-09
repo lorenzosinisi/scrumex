@@ -14,11 +14,19 @@ defmodule ScrumpointerWeb.Api.Subscription do
     )
   end
 
-  def create(%{assigns: %{current_user: user, project: project}} = conn, params) do
-    {:ok, user} = Scrumpointer.Subscriptions.create_stripe_customer(user, params)
+  def create(%{assigns: %{current_user: user, project: project}} = conn, %{
+        "token" => %{"id" => source}
+      }) do
+    {:ok, user} =
+      Scrumpointer.Billing.create_stripe_customer(user, %{
+        description: "Standard Subscription",
+        email: user.email,
+        metadata: %{user_id: user.id, source: "ScrumpointerWeb.Api.Subscription.create"},
+        source: source
+      })
 
-    {:ok, subscription} =
-      Scrumpointer.Subscriptions.subscribe_customer_to_stripe_plan(user, project, get_plan_id())
+    {:ok, _} =
+      Scrumpointer.Billing.subscribe_customer_to_stripe_plan(user, project, get_plan_id())
 
     render(
       conn,

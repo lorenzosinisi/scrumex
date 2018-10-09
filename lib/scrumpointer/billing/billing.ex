@@ -1,7 +1,7 @@
 defmodule Scrumpointer.Billing do
   alias Scrumpointer.Coherence.User
   alias Scrumpointer.Repo
-  alias Stripe.Customer
+  alias Stripe.Customers
 
   def create_stripe_customer(
         user = %{stripe_customer_id: nil},
@@ -12,10 +12,10 @@ defmodule Scrumpointer.Billing do
           source: source_token
         } = attrs
       ) do
-    Customer.create(attrs)
+    Customers.create(attrs)
     |> case do
       {:ok, stripe_customer = %{id: stripe_customer_id}} ->
-        User.stripe_changeset(%{stripe_customer_id: stripe_customer_id})
+        User.stripe_changeset(user, %{stripe_customer_id: stripe_customer_id})
         |> Repo.update()
 
       {:error, error} ->
@@ -31,7 +31,7 @@ defmodule Scrumpointer.Billing do
   def subscribe_customer_to_stripe_plan(user, project, plan_id) do
     # add the tax_percentage, vat here as an extra attribute if needed
     {:ok, %{id: stripe_subscription_id}} =
-      Stripe.Subscription.create(user.stripe_customer_id, plan: plan_id)
+      Stripe.Subscriptions.create(user.stripe_customer_id, plan: plan_id)
 
     Scrumpointer.Subscriptions.create(user, project, stripe_subscription_id)
   end

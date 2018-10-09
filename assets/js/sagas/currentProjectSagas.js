@@ -49,10 +49,8 @@ function * handleUpgradeProject (action) {
   try {
     const url = `${CONFIGURATION.host}/api/projects/${action.payload.project.id}/upgrade`
     const { data } = yield call(axios.patch, url, action.payload)
-    yield put(actionProject.success({ data }))
-    yield put(actionGetProject.success({ data }))
+    yield put(actionGetProject.request(null, action.payload.project.id))
   } catch (e) {
-    console.log(e)
     yield put(actionProject.failure({ error: { ...e } }))
   }
 }
