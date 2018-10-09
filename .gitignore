@@ -5,6 +5,8 @@
 /.deliver
 /*.ez
 
+/.deliver
+
 .prod.secret.exs
 
 *.env
