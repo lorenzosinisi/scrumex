@@ -125,7 +125,8 @@ export const actionProject = {
   update: (data) => createAction(API_PROJECT.UPDATE, { ...data, loading: true, success: false, error: null }),
   reset:    ()     => createAction(API_PROJECT.RESET),
   success:  (data) => createAction(API_PROJECT.SUCCESS, { ...data, loading: false, success: true, error: null }),
-  failure:  (error) => createAction(API_PROJECT.FAILURE, { ...error, loading: false, success: false })
+  failure:  (error) => createAction(API_PROJECT.FAILURE, { ...error, loading: false, success: false }),
+  upgrade: (data) => createAction(API_PROJECT.UPGRADE, { ...data, loading: true, success: false, error: null }),
 }
 
 export const actionTeam = {

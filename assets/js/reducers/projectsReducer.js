@@ -11,7 +11,7 @@ const initialState = fromJS({
   error: null
 })
 
-export default function exampleReducer (state = initialState, action) {
+export default function projectsReducer (state = initialState, action) {
   switch (action.type) {
     case API_GET_MY_PROJECTS.REQUEST:
     case API_GET_MY_PROJECTS.SUCCESS:

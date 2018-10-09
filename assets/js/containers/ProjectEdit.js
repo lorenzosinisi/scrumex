@@ -44,10 +44,6 @@ import {
 } from '../selectors/showProjectSelector'
 
 
-const callStripeApi = (payload) => {
-  this.props.updateProject(this.state)
-}
-
 const styles = theme => ({
   main: theme.mixins.gutters({
     width: '100%',
@@ -61,11 +57,19 @@ const styles = theme => ({
 })
 
 class _CardForm extends Component {
+  constructor(props, context) {
+    super(props, context);
+  }
+
+  upgradeProject = (project) => (payload) => {
+    this.props.upgradeProject({...payload, project: project})
+  }
+
   render() {
     return (
       <form onSubmit={(e) => {
           e.preventDefault()
-          this.props.stripe.createToken().then(callStripeApi)
+          this.props.stripe.createToken().then(this.upgradeProject(this.props.project))
         }}>
         <CardElement />
         <button>Pay</button>
@@ -73,6 +77,7 @@ class _CardForm extends Component {
     )
   }
 }
+
 const CardForm = injectStripe(_CardForm)
 
 class ProjectEdit extends Component {
@@ -195,7 +200,10 @@ class ProjectEdit extends Component {
             Payment details:
           </Typography>
           <Elements>
-            <CardForm />
+            <CardForm
+              stripe={this.props.stripe}
+              project={this.props.project}
+              upgradeProject={this.props.upgradeProject}/>
           </Elements>
         </Paper>
       </div>
@@ -217,6 +225,7 @@ function mapDispatchToProps (dispatch) {
     createProject: (data) => dispatch(actionCreateProject.save(data)),
     loadCurrentProject: (userToken, projectId) => dispatch(actionGetProject.request(userToken, projectId)),
     updateProject: (data) => dispatch(actionProject.update(data)),
+    upgradeProject: (data) => dispatch(actionProject.upgrade(data))
   }
 }
 export default compose(
