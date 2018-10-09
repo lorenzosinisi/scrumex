@@ -13,7 +13,7 @@ config :logger, level: :warn
 # Configure your database
 config :scrumpointer, Scrumpointer.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
+  username: "elixir",
   password: "",
   key_urls: "some secret",
   database: "scrumpointer_test",
