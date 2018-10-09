@@ -45,10 +45,23 @@ function * handleUpdateProject (action) {
   }
 }
 
+function * handleUpgradeProject (action) {
+  try {
+    const url = `${CONFIGURATION.host}/api/projects/${action.payload.project.id}/upgrade`
+    const { data } = yield call(axios.patch, url, action.payload)
+    yield put(actionProject.success({ data }))
+    yield put(actionGetProject.success({ data }))
+  } catch (e) {
+    console.log(e)
+    yield put(actionProject.failure({ error: { ...e } }))
+  }
+}
+
 function * watchProjectSagas () {
   yield [
     takeLatest(API_GET_PROJECT.REQUEST, handleGetProject),
-    takeLatest(API_PROJECT.UPDATE, handleUpdateProject)
+    takeLatest(API_PROJECT.UPDATE, handleUpdateProject),
+    takeLatest(API_PROJECT.UPGRADE, handleUpgradeProject)
   ]
 }
 

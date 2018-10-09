@@ -160,6 +160,7 @@ export const API_GET_PROJECT = createActionTypes('API_GET_PROJECT', [
 export const API_PROJECT = createActionTypes('API_PROJECT', [
   'UPDATE',
   'SUCCESS',
+  'UPGRADE',
   'FAILURE']
 )
 
