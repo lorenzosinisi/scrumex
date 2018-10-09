@@ -22,6 +22,7 @@ defmodule Scrumpointer.Coherence.User do
     field(:provider, :string)
     field(:github_data, :binary)
     field(:github_id, :string)
+    field(:stripe_customer_id, :string)
     field(:terms_accepted_at, Ecto.DateTime)
     field(:admin, :boolean)
     has_many(:teams, Team, on_delete: :nilify_all, foreign_key: :owner_id)

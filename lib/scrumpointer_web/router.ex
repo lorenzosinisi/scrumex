@@ -109,6 +109,7 @@ defmodule ScrumpointerWeb.Router do
       get("/team", Team, :index)
       get("/feedback", Feedback, :index)
       post("/add_member/:user_email", ProjectUsers, :add)
+      patch("/upgrade/", Subscription, :create)
       delete("/remove_member/:user_email", ProjectUsers, :remove)
       get("/members", ProjectUsers, :index)
     end
