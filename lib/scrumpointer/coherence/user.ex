@@ -78,6 +78,11 @@ defmodule Scrumpointer.Coherence.User do
     end
   end
 
+  def stripe_changeset(model, params \\ %{}) do
+    model
+    |> cast(params, [:stripe_customer_id])
+  end
+
   def convert_terms_accepted_at(_model, params) do
     terms_accepted_at = get_in(params, ["terms_accepted_at"])
 

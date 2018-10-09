@@ -68,7 +68,8 @@ defmodule Scrumpointer.Mixfile do
       {:sentry, "~> 6.1.0"},
       {:edeliver, "~> 1.4.3"},
       {:distillery, "~> 1.4"},
-      {:excoveralls, "~> 0.8", only: :test}
+      {:excoveralls, "~> 0.8", only: :test},
+      {:stripity_stripe, "~> 2.0.0"}
     ]
   end
 
