@@ -42,3 +42,5 @@ config :sentry,
     env: "test"
   },
   included_environments: [:prod]
+
+config :stripity_stripe, api_key: System.get_env("STRIPE_SECRET_KEY")

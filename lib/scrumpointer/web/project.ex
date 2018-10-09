@@ -6,11 +6,13 @@ defmodule Scrumpointer.Web.Project do
   alias Scrumpointer.Repo
   import Ecto.Query, warn: false
   alias Scrumpointer.Services.GitHub
+  alias Scrumpointer.Subscription
 
   schema "projects" do
     field(:name, :string)
     field(:user_id, :id)
     field(:team_emails, {:array, :string}, default: [])
+    has_one(:subscription, Subscription)
     has_many(:polls, Poll, on_delete: :nilify_all)
     has_many(:user_invitations, UserInvitation, on_delete: :nilify_all)
     has_many(:lists, List, on_delete: :nilify_all)

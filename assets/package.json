@@ -45,6 +45,7 @@
     "react-router-redux": "^5.0.0-alpha.6",
     "react-select": "^1.0.0-rc.10",
     "react-sortable-hoc": "^0.6.8",
+    "react-stripe-elements": "^2.0.1",
     "react-swipeable-views": "^0.12.13",
     "recompose": "^0.26.0",
     "redux": "^3.7.2",
