@@ -69,7 +69,7 @@ defmodule Scrumpointer.Mixfile do
       {:edeliver, "~> 1.4.3"},
       {:distillery, "~> 1.4"},
       {:excoveralls, "~> 0.8", only: :test},
-      {:stripity_stripe, "~> 2.0.0"}
+      {:stripity_stripe, "~> 1.6.0"}
     ]
   end
 
