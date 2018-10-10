@@ -66,7 +66,7 @@ config :scrumpointer, Scrumpointer.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "lorenzosinisi",
   password: "",
-  database: "scrumpointer_dev",
+  database: "scrumpointer_development",
   hostname: "localhost",
   pool_size: 10
 
