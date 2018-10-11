@@ -50,7 +50,7 @@ class NavigationTop extends Component {
   handleClose = () => this.toggleDrawer(false)
 
   render () {
-    const { classes: { linkSearchIcon, linkSearch, primaryColor, backButton, flex }, route, logOutAction, project } = this.props
+    const { classes: { linkSearchIcon, linkSearch, primaryColor, backButton, flex }, route, logOutAction, project, user } = this.props
     return (
       <div>
         <AppBar position='static' className={primaryColor}>
@@ -86,6 +86,7 @@ class NavigationTop extends Component {
           </Toolbar>
         </AppBar>
         <NavigationMain
+          user={user}
           project={this.props.project}
           sprint={this.props.sprint}
           story={this.props.story}

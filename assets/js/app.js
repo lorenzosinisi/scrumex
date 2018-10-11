@@ -35,6 +35,7 @@ class App extends Component {
   render () {
     return <div>
         <NavigationTop
+          user={this.props.user}
           route={this.props.route}
           logOutAction={this.props.logOutAction}
           project={this.props.project}
