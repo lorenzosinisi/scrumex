@@ -1,6 +1,7 @@
 defmodule Scrumpointer.Billing do
   alias Scrumpointer.Coherence.User
   alias Scrumpointer.Repo
+  alias Scrumpointer.Web.Project
   alias Stripe.Customers
 
   def create_stripe_customer(
@@ -30,10 +31,45 @@ defmodule Scrumpointer.Billing do
 
   def subscribe_customer_to_stripe_plan(user, project, plan_id) do
     # add the tax_percentage, vat here as an extra attribute if needed
-    {:ok, %{id: stripe_subscription_id}} =
-      Stripe.Subscriptions.create(user.stripe_customer_id, plan: plan_id)
+    user = Scrumpointer.Repo.get(User, user.id)
 
-    Scrumpointer.Subscriptions.create(user, project, stripe_subscription_id)
+    project =
+      Scrumpointer.Repo.get(Project, project.id)
+      |> Scrumpointer.Repo.preload(:subscription)
+
+    do_subscribe_customer_to_stripe_plan(user, project, plan_id)
+  end
+
+  defp do_subscribe_customer_to_stripe_plan(
+         user = %{stripe_customer_id: stripe_customer},
+         project,
+         plan_id
+       )
+       when is_binary(stripe_customer) do
+    if project.subscription == nil do
+      {:ok, %{id: stripe_subscription_id}} =
+        Stripe.Subscriptions.create(
+          stripe_customer,
+          plan: plan_id,
+          metadata: %{project_id: project.id}
+        )
+
+      Scrumpointer.Subscriptions.create(user, project, stripe_subscription_id)
+    else
+      {:ok, project}
+    end
+  end
+
+  defp do_subscribe_customer_to_stripe_plan(
+         %{stripe_customer_id: nil},
+         _,
+         _
+       ) do
+    {:error, "The user must be a Stripe customer first"}
+  end
+
+  defp do_subscribe_customer_to_stripe_plan(_, _, _) do
+    {:error, "Stripe error unknown"}
   end
 
   def delete_subscription(user, project, subscription_id) do

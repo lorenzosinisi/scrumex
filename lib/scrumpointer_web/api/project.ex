@@ -13,7 +13,8 @@ defmodule ScrumpointerWeb.Api.Project do
 
   def show(%{assigns: %{current_user: user}} = conn, %{"project_id" => id}) do
     project =
-      Project.get(%{user_email: user.email, user: user, id: id}) |> Web.preload([:polls, :lists])
+      Project.get(%{user_email: user.email, user: user, id: id})
+      |> Web.preload([:polls, :lists, :subscription])
 
     render(conn, "show.json", project: project)
   end

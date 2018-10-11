@@ -37,7 +37,7 @@ defmodule Scrumpointer.Web.Project do
 
   def get(%{user_email: user_email, user: user, id: id}) do
     Repo.get!(Project, id)
-    |> Repo.preload([:users, :user_invitations])
+    |> Repo.preload([:users, :user_invitations, :subscription])
     |> case do
       %Project{} = project ->
         cond do
@@ -97,6 +97,7 @@ defmodule Scrumpointer.Web.Project do
   def list_mine(user) do
     from(t in Project, where: t.user_id == ^user.id)
     |> Repo.all()
+    |> Repo.preload(:subscription)
   end
 
   def list_collaborating(user) do
@@ -106,11 +107,12 @@ defmodule Scrumpointer.Web.Project do
       Project
       |> where([u], ^user.email in u.team_emails)
       |> Repo.all()
+      |> Repo.preload(:subscription)
 
     associations =
       from(p in Scrumpointer.Web.ProjectUsers, where: p.user_id == ^user_id)
       |> Repo.all()
-      |> Repo.preload(:project)
+      |> Repo.preload(:project, project: [:subscription])
 
     (projects_collaborating ++ Enum.map(associations, fn association -> association.project end))
     |> Enum.uniq()

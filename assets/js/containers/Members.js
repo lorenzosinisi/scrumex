@@ -50,6 +50,19 @@ const styles = theme => ({
   membersWrapper: {
 
   },
+  messageWrapper: {
+    paddingTop: 20
+  },
+  dashedDiv: {
+    color: 'rgba(0, 0, 0, 0.54)',
+    padding: 10,
+    'border-width': 2,
+    'border-color': 'rgba(0, 0, 0, 0.54)',
+    'border-style': 'dashed',
+    'border-radius': 5,
+    margin: 20,
+    marginLeft: 0,
+  },
   tip: {
     padding: 46,
     opacity: 0.8,
@@ -90,6 +103,25 @@ class Members extends Component {
 
   render() {
     const { classes, project, members } = this.props
+
+    if (!project) { return <div />}
+
+    if (!project.subscription) {
+      return <div className={classes.main}>
+        <Typography type='display1'>{project.name} / Members</Typography>
+
+        <div className={classes.messageWrapper}>
+          <div className={classes.dashedDiv}>
+          Please, upgrade your plan to add team members to this project.
+          </div>
+        </div>
+
+        <div className={classes.membersWrapper}>
+        </div>
+      </div>
+    }
+
+    if (project && project.subscription) {
     return <div className={classes.main}>
         <Typography type='display1'>{project.name} / Members</Typography>
         <div className={classes.membersWrapper}>
@@ -108,7 +140,11 @@ class Members extends Component {
           </div>
         </div>
       </div>
+   }
+
+   return <div />
   }
+
 }
 
 
