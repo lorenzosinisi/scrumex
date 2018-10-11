@@ -94,8 +94,14 @@ class _CardForm extends Component {
     this.props.upgradeProject({...payload, project: project})
   }
 
-  render() {
+  handleSubmitUpgrade = (e) => {
+    e.preventDefault()
+    if (confirm("Are you sure you want to upgrade?")) {
+      this.props.stripe.createToken().then(this.upgradeProject(this.props.project))
+    }
+  }
 
+  render() {
     if (this.state.loading && !this.props.project.subscription) {
       return (<div className={this.props.dashedDiv}>Loading...</div>)
     }
@@ -118,10 +124,7 @@ class _CardForm extends Component {
       <Typography type='headline'>
         Enter your credit card details
       </Typography>
-      <form style={{marginTop: 20, marginBottom: 20}} onSubmit={(e) => {
-          e.preventDefault()
-          this.props.stripe.createToken().then(this.upgradeProject(this.props.project))
-        }}>
+      <form style={{marginTop: 20, marginBottom: 20}} onSubmit={this.handleSubmitUpgrade}>
         <CardElement />
         <Button type="submit" raised color="primary" aria-label="Subscribe" className={this.props.styleButtonSubscribe}>
           Upgrade
@@ -252,7 +255,7 @@ class ProjectEdit extends Component {
         </Paper>
         <Paper className={projectBilling}>
           <Typography type='headline'>
-            Plan: {this.props.project && this.props.project.subscription ? 'Premium' : 'free' }
+            Plan: {this.props.project && this.props.project.subscription ? 'premium' : 'free' }
           </Typography>
           <Elements>
             <CardForm
