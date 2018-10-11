@@ -10,6 +10,8 @@ import ChevronLefttIcon from 'material-ui-icons/ChevronLeft'
 import ListIcon from 'material-ui-icons/FormatListNumbered'
 import Label from 'material-ui-icons/Label'
 import Create from 'material-ui-icons/Create'
+import People from 'material-ui-icons/People'
+import Star from 'material-ui-icons/Star'
 import Search from 'material-ui-icons/Search'
 import Home from 'material-ui-icons/Inbox'
 import Dashboard from 'material-ui-icons/Dashboard'
@@ -97,7 +99,7 @@ class ProjectMenu extends Component {
   }
 }
 
-const NavigationMain = ({ isOpen, onRequestClose, onClick, classes, project, sprint, story, logOutAction }) => {
+const NavigationMain = ({ isOpen, onRequestClose, onClick, classes, project, sprint, story, logOutAction, user }) => {
   const { list, drawerHeader } = classes
 
   return (
@@ -140,15 +142,23 @@ const NavigationMain = ({ isOpen, onRequestClose, onClick, classes, project, spr
                 <ListItemText primary="New Story" />
                 </ListItem>
             </Link>
-            <Link to={`/app/projects/${project.id}/feedback`}>
+            {user.id == project.user_id, <Link to={`/app/projects/${project.id}/members`}>
               <ListItem button>
                 <ListItemIcon>
-                    <Feedback />
+                    <People />
                 </ListItemIcon>
-                <ListItemText primary="Feedback" />
+                <ListItemText primary="Team" />
                 </ListItem>
-            </Link>
-            <Divider />
+            </Link>}
+            {user.id == project.user_id, <Link to={`/app/projects/${project.id}/edit`}>
+              <ListItem button>
+                <ListItemIcon>
+                    <Star />
+                </ListItemIcon>
+                <ListItemText primary="Billing" />
+                </ListItem>
+            </Link>}
+
             <Divider />
           </div>
         }

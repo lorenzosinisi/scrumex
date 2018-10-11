@@ -25,7 +25,7 @@ defmodule ScrumpointerWeb.Api.ProjectView do
   def render("delete.json", %{message: message}), do: %{ok: message}
 
   defp project_json(project) do
-    project = Web.preload(project, [:polls, :repositories, :lists, :users])
+    project = Web.preload(project, [:polls, :repositories, :lists, :users, :subscription])
 
     %{
       id: project.id,
