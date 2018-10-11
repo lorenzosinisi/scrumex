@@ -7,6 +7,7 @@ defmodule Scrumpointer.Subscription do
   schema "subscriptions" do
     belongs_to(:user, User, type: :id)
     belongs_to(:project, Project, type: :id)
+    field(:uuid, :string, default: UUID.uuid4(:hex))
     field(:stripe_subscription_id, :string)
     timestamps()
   end

@@ -35,7 +35,8 @@ defmodule ScrumpointerWeb.Api.ProjectView do
       repositories: Enum.map(project.repositories, &RepositoryView.to_json/1),
       collaborators:
         (project.team_emails ++ Enum.map(project.users, fn user -> user.email end)) |> Enum.uniq(),
-      active_sprints: ActiveSprints.list(project.lists) |> Enum.map(&SprintView.to_json/1)
+      active_sprints: ActiveSprints.list(project.lists) |> Enum.map(&SprintView.to_json/1),
+      subscription: to_json(:subscription, project.subscription)
     }
   end
 
@@ -49,5 +50,17 @@ defmodule ScrumpointerWeb.Api.ProjectView do
       "#{field_name}": extra_data,
       repositories: project.repositories
     }
+  end
+
+  defp to_json(:subscription, nil) do
+    nil
+  end
+
+  defp to_json(:subscription, %{} = subscription) do
+    %{id: subscription.uuid}
+  end
+
+  defp to_json(:subscription, _) do
+    %{error: "Something went wrong loading the subscription for this project"}
   end
 end

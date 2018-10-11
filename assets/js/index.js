@@ -35,6 +35,7 @@ import configureStore from './store'
 import { MuiThemeProvider } from 'material-ui/styles/'
 import theme from './theme/'
 import axios from 'axios';
+import { CONFIGURATION } from './config/index'
 
 import App from './app'
 
@@ -68,7 +69,7 @@ if (document.getElementById('app')) {
     <Provider store={store}>
       <ConnectedRouter history={history}>
         <MuiThemeProvider theme={theme}>
-          <StripeProvider apiKey="pk_test_BJHJPwX8fY5S4ExzWgrHytrj">
+          <StripeProvider apiKey={CONFIGURATION.stripePublishableKey}>
             <App />
           </StripeProvider>
         </MuiThemeProvider>

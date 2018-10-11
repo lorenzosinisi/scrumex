@@ -8,6 +8,7 @@ import { withStyles } from 'material-ui/styles'
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import WithExternalLinks from '../hocs/WithExternalLinks'
+import Button from 'material-ui/Button'
 
 import {
   CardElement,
@@ -53,27 +54,81 @@ const styles = theme => ({
   }),
   projectBilling: {
     padding: 30,
-  }
+  },
+  creditCardForm: {
+    maxWidth: 500
+  },
+  styleButtonSubscribe: {
+    float: 'right',
+    height: '30px',
+    'font-size': theme.spacing.unit * 1.5,
+    width: 'auto',
+    marginRight: theme.spacing.unit,
+    marginTop: 20,
+  },
+  dashedDiv: {
+    color: 'rgba(0, 0, 0, 0.54)',
+    padding: 10,
+    'border-width': 2,
+    'border-color': 'rgba(0, 0, 0, 0.54)',
+    'border-style': 'dashed',
+    'border-radius': 5,
+    margin: 20,
+    marginLeft: 0,
+  },
 })
 
 class _CardForm extends Component {
   constructor(props, context) {
     super(props, context);
   }
+  state = {}
+
+  componentDidMount () {
+    this.setState({loading: false})
+    console.log(this.props.project)
+  }
 
   upgradeProject = (project) => (payload) => {
+    this.setState({loading: true})
     this.props.upgradeProject({...payload, project: project})
   }
 
   render() {
+
+    if (this.state.loading && !this.props.project.subscription) {
+      return (<div className={this.props.dashedDiv}>Loading...</div>)
+    }
+
+    if (!this.props.project) {
+      return (<div></div>)
+    }
+
+    if (this.props.project && this.props.project.subscription) {
+      return (<div className={this.props.dashedDiv}>
+          This project has an active subscription, send an email to <a href="mailto:info@scrumex.com">info@scrumex.com</a> to change or delete the subscription.
+          <br /> Feel free to contact us for any question regarding subscriptions or payments.
+
+          <br /><br /> Please mention the code <code>{this.props.project.subscription.id}</code> in our communication to make it easier helping you.
+          </div>)
+    }
+
     return (
-      <form onSubmit={(e) => {
+      <div style={{marginTop: 20}}>
+      <Typography type='headline'>
+        Enter your credit card details
+      </Typography>
+      <form style={{marginTop: 20, marginBottom: 20}} onSubmit={(e) => {
           e.preventDefault()
           this.props.stripe.createToken().then(this.upgradeProject(this.props.project))
         }}>
         <CardElement />
-        <button>Pay</button>
+        <Button type="submit" raised color="primary" aria-label="Subscribe" className={this.props.styleButtonSubscribe}>
+          Upgrade
+        </Button>
       </form>
+      <div style={{fontSize: 12, marginTop: 20}}>Powered by <a target="blank" href="https://stripe.com">Stripe</a></div>
+      </div>
     )
   }
 }
@@ -174,13 +229,13 @@ class ProjectEdit extends Component {
 
   render () {
     let { name, collaborators, repositories } = this.state
-    const { classes: { main, projectBilling }, userRepos } = this.props
+    const { classes: { main, projectBilling, creditCardForm, styleButtonSubscribe, dashedDiv }, userRepos } = this.props
     if (!this.props.project.id) { return <div /> }
     return (
       <div className={main}>
         <Paper>
           <ProjectForm
-            title="Change name:"
+            title="Project name"
             name={name}
             handleCreateProject={this.handleUpdateProject}
             handleChange={this.handleChange}
@@ -192,15 +247,19 @@ class ProjectEdit extends Component {
             repos={repositories}
             collaborators={collaborators}
             handleChangeEmail={this.handleChangeEmail}
-            buttonTitle={"Save"}
+            buttonTitle={"Update"}
           />
         </Paper>
         <Paper className={projectBilling}>
           <Typography type='headline'>
-            Payment details:
+            Plan: {this.props.project && this.props.project.subscription ? 'Premium' : 'free' }
           </Typography>
           <Elements>
             <CardForm
+              style={creditCardForm}
+              styleButtonSubscribe={styleButtonSubscribe}
+              dashedDiv={dashedDiv}
+              subscription={this.props.project.subscription}
               stripe={this.props.stripe}
               project={this.props.project}
               upgradeProject={this.props.upgradeProject}/>

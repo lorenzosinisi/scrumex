@@ -153,7 +153,7 @@ const ProjectForm = (props) => {
               required
               id='required'
               type='text'
-              label='Project Name'
+              label='Name'
               value={name}
               className={textField}
               margin='normal'
