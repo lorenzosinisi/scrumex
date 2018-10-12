@@ -6,6 +6,7 @@ import MemberInvitations from '../components/members/invitations'
 import MemberForm from '../components/members/form'
 import { createStructuredSelector } from 'reselect'
 import WithExternalLinks from '../hocs/WithExternalLinks'
+import { Link } from 'react-router-dom'
 // MUI
 import { withStyles } from 'material-ui/styles'
 import { withRouter } from 'react-router-dom'
@@ -112,7 +113,8 @@ class Members extends Component {
 
         <div className={classes.messageWrapper}>
           <div className={classes.dashedDiv}>
-          Please, upgrade your plan to add team members to this project.
+          Collaboration is key. When working on a project using agile methodologies it is important to evolve evolve through collaboration between self-organizing cross-functional teams. Scrumex is free to use for a single person but needs an upgrade in order to be able to invite team members to collaborate.
+          Please, upgrade your plan to add team members to this project. Click <Link to={`/app/projects/${project.id}/edit`}>here</Link> to upgrade your plan.
           </div>
         </div>
 

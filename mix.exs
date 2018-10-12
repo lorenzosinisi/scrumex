@@ -52,7 +52,7 @@ defmodule Scrumpointer.Mixfile do
     [
       {:phoenix, "~> 1.3.0"},
       {:phoenix_pubsub, "~> 1.0"},
-      {:phoenix_ecto, "~> 3.2"},
+      {:phoenix_ecto, "~> 3.2", override: true},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.10"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
@@ -69,7 +69,8 @@ defmodule Scrumpointer.Mixfile do
       {:edeliver, "~> 1.4.3"},
       {:distillery, "~> 1.4"},
       {:excoveralls, "~> 0.8", only: :test},
-      {:stripity_stripe, "~> 1.6.0"}
+      {:stripity_stripe, "~> 1.6.0"},
+      {:phoenix_postgres_pub_sub, "~> 0.1.0"}
     ]
   end
 

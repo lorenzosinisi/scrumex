@@ -24,7 +24,7 @@ function * handleCreateProject (action) {
   try {
     const { data } = yield call(axios.post, `${CONFIGURATION.host}/api/projects/create/`, { project: action.payload })
     yield put(actionCreateProject.success({ data }))
-    yield put(push(`/app/projects/${data.id}/members`))
+    yield put(push(`/app/projects/${data.id}/`))
   } catch (e) {
     yield put(actionCreateProject.failure({ error: { ...e } }))
   }

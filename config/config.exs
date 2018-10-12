@@ -70,6 +70,12 @@ config :ex_aws,
     region: "eu-west-2"
   ]
 
+config :phoenix_postgres_pub_sub, :config,
+  # this should be the main module of your phoenix application
+  adapter: Scrumpointer,
+  # and this should be the main repo of your phoenix application
+  repo: Scrumpointer.Repo
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

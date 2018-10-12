@@ -15,7 +15,17 @@ defmodule Scrumpointer.Application do
       # Start the endpoint when the application starts
       supervisor(ScrumpointerWeb.Endpoint, []),
       # Start your own worker by calling: Scrumpointer.Worker.start_link(arg1, arg2, arg3)
-      worker(Cachex, [Application.get_env(:cachex, :key), []])
+      worker(Cachex, [Application.get_env(:cachex, :key), []]),
+      worker(
+        PhoenixPostgresPubSub,
+        [
+          [
+            "users_changes",
+            "projects_changes"
+          ]
+        ],
+        restart: :permanent
+      )
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
