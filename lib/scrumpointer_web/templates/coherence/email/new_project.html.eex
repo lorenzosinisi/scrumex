@@ -1,0 +1,15 @@
+<div>
+  <p><%= dgettext "coherence", "Hello %{name}!", name: @name %><p>
+  <p>
+    <%= "'#{@project_name}' has been created successfully! " %>
+  </p>
+  <p>
+   You can now start creating your fist stories in the backlog, creating your first sprint or inviting your team members to join!
+   <br />
+   Remember that if you have any question you can contact me at info@scrumex.com and I would gladly help you out.
+  </p>
+   <p>
+    <a href="<%= @url %>"><%= dgettext "coherence", "View project backlog" %></a>
+  </p>
+  <p>Lorenzo Sinisi from Scrumex.com</p>
+</div>

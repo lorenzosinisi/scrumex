@@ -9,6 +9,12 @@ defimpl Protocol.WebApp, for: Scrumpointer.Web.Comment do
   end
 end
 
+defimpl Protocol.WebApp, for: Scrumpointer.Web.Project do
+  def url(project) do
+    "https://workplace.scrumex.com/app/projects/#{project.id}/"
+  end
+end
+
 defimpl Protocol.WebApp, for: Any do
   def url(_) do
     "https://workplace.scrumex.com/app"

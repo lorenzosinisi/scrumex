@@ -10,7 +10,7 @@ defmodule Scrumpointer.Web.Project do
 
   schema "projects" do
     field(:name, :string)
-    field(:user_id, :id)
+    belongs_to(:user, User)
     field(:team_emails, {:array, :string}, default: [])
     has_one(:subscription, Subscription)
     has_many(:polls, Poll, on_delete: :nilify_all)
