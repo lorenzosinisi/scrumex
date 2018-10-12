@@ -9,6 +9,7 @@ import SprintsTable from '../components/sprints/SprintsTable'
 import { arrayMove } from 'react-sortable-hoc'
 import FloatingLink from '../components/buttons/floating'
 import WithExternalLinks from '../hocs/WithExternalLinks'
+import { Link } from 'react-router-dom'
 // MUI
 import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
@@ -58,6 +59,16 @@ const styles = theme => ({
   }),
   tabs: {
     boxShadow: 'none !important'
+  },
+  dashedDiv: {
+    color: 'rgba(0, 0, 0, 0.54)',
+    padding: 10,
+    'border-width': 2,
+    'border-color': 'rgba(0, 0, 0, 0.54)',
+    'border-style': 'dashed',
+    'border-radius': 5,
+    margin: 20,
+    marginLeft: 0,
   }
 })
 
@@ -93,6 +104,12 @@ class Project extends Component {
     this.props.rankStoryLast(story)
   }
 
+  isBacklogEmpty() {
+    return this.props.loading == false
+      && this.props.currentProject.backlog
+      && this.props.currentProject.backlog.length == 0
+  }
+
   handleRankBetween = (story, newList) => {
     let newIndex = newList.indexOf(story)
     let previousStory = newList[newIndex - 1].id
@@ -123,7 +140,7 @@ class Project extends Component {
   }
 
   render () {
-    const { currentProject, sprints, classes: { main, tabs } } = this.props
+    const { currentProject, sprints, classes: { main, tabs, dashedDiv } } = this.props
     return (
       <div>
         <AppBar position='static' className={tabs}>
@@ -141,18 +158,25 @@ class Project extends Component {
             </div>
           }
           {this.state.activeTab === 0 &&
-            <div>
-            <Typography type='display1'>{currentProject.name} - Backlog</Typography>
-            <br />
-            <StoriesSortableTable
-              reordering={this.state.reordering}
-              onSortEnd={this.onSortEnd}
-              data={currentProject.backlog}
-              handleRankFirst={this.handleRankFirst}
-              handleRankLast={this.handleRankLast}
-            />
-            <FloatingLink path={`/app/projects/${this.props.match.params.project_id}/stories/new`} />
-            </div>
+              <div>
+              <Typography type='display1'>{currentProject.name} - Backlog</Typography>
+              <br />
+
+              {this.isBacklogEmpty() == true ? <div className={dashedDiv}>
+                The product backlog is a prioritized features list, containing short descriptions of all functionality desired in the project. When applying Scrum, its not necessary to start a project with a lengthy, upfront effort to document all requirements. You can start doing so creating one Story for each feature, click <Link to={`/app/projects/${currentProject.id}/stories/new`}> here </Link></div>
+                :
+                <StoriesSortableTable
+                reordering={this.state.reordering}
+                onSortEnd={this.onSortEnd}
+                data={currentProject.backlog}
+                handleRankFirst={this.handleRankFirst}
+                handleRankLast={this.handleRankLast}
+              />
+              }
+
+              <FloatingLink path={`/app/projects/${this.props.match.params.project_id}/stories/new`} />
+              </div>
+
           }
         </div>
       </div>

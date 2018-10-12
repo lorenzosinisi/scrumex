@@ -76,6 +76,13 @@ const styles = theme => ({
     margin: 20,
     marginLeft: 0,
   },
+  infoDiv: {
+    color: 'rgba(0, 0, 0, 0.54)',
+    padding: 10,
+    margin: 20,
+    marginLeft: 0,
+    marginBottom: 50,
+  },
 })
 
 class _CardForm extends Component {
@@ -121,6 +128,8 @@ class _CardForm extends Component {
 
     return (
       <div style={{marginTop: 20}}>
+
+      <div className={this.props.infoDiv}>Upgrading your plan will allow you to invite team members to collaborate on this project. The premium version of Scrumex costs 50Euro/Month and it is billed monthly. In order to upgrade enter your credit card details below and click on 'Upgrade'. <br/> You will be given 14 days of trial in which you can evaluate the product and decide weather to continue the subscription or not.</div>
       <Typography type='headline'>
         Enter your credit card details
       </Typography>
@@ -232,7 +241,7 @@ class ProjectEdit extends Component {
 
   render () {
     let { name, collaborators, repositories } = this.state
-    const { classes: { main, projectBilling, creditCardForm, styleButtonSubscribe, dashedDiv }, userRepos } = this.props
+    const { classes: { main, projectBilling, creditCardForm, styleButtonSubscribe, dashedDiv, infoDiv }, userRepos } = this.props
     if (!this.props.project.id) { return <div /> }
     return (
       <div className={main}>
@@ -262,6 +271,7 @@ class ProjectEdit extends Component {
               style={creditCardForm}
               styleButtonSubscribe={styleButtonSubscribe}
               dashedDiv={dashedDiv}
+              infoDiv={infoDiv}
               subscription={this.props.project.subscription}
               stripe={this.props.stripe}
               project={this.props.project}
