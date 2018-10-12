@@ -69,8 +69,7 @@ defmodule Scrumpointer.Mixfile do
       {:edeliver, "~> 1.4.3"},
       {:distillery, "~> 1.4"},
       {:excoveralls, "~> 0.8", only: :test},
-      {:stripity_stripe, "~> 1.6.0"},
-      {:phoenix_postgres_pub_sub, "~> 0.1.0"}
+      {:stripity_stripe, "~> 1.6.0"}
     ]
   end
 
