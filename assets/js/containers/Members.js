@@ -107,7 +107,8 @@ class Members extends Component {
 
     if (!project) { return <div />}
 
-    if (!project.subscription) {
+    if (false) {
+      //!project.subscription
       return <div className={classes.main}>
         <Typography type='display1'>{project.name} / Members</Typography>
 
@@ -123,7 +124,8 @@ class Members extends Component {
       </div>
     }
 
-    if (project && project.subscription) {
+    if (true) {
+      // if project && project.subscription
     return <div className={classes.main}>
         <Typography type='display1'>{project.name} / Members</Typography>
         <div className={classes.membersWrapper}>

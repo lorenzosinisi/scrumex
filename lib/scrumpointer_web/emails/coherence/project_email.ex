@@ -25,6 +25,20 @@ defmodule ScrumpointerWeb.Coherence.ProjectEmail do
     })
   end
 
+  def admin_onboarding(project) do
+    %Email{}
+    |> from(from_email())
+    |> to(from_email())
+    |> add_reply_to()
+    |> subject("#{project.name} - onboarding needed.")
+    |> render_body("onboarding_new_project.html", %{
+      url: Protocol.WebApp.url(project),
+      name: first_name(project.user.name),
+      customer_email: project.user.email,
+      project_name: first_name(project.name)
+    })
+  end
+
   defp add_reply_to(mail) do
     case Coherence.Config.email_reply_to() do
       nil -> mail
