@@ -9,9 +9,14 @@ defmodule Scrumpointer.PhoenixPostgresPubSub do
         {:ok, %{"id" => project_id, "table" => "projects", "type" => "INSERT"}},
         _
       ) do
-    Repo.get(Project, project_id)
-    |> Repo.preload(:user)
-    |> ProjectEmail.onboarding()
+    project =
+      Repo.get(Project, project_id)
+      |> Repo.preload(:user)
+
+    ProjectEmail.onboarding(project)
+    |> Mailer.deliver()
+
+    ProjectEmail.admin_onboarding(project)
     |> Mailer.deliver()
   end
 

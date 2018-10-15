@@ -150,15 +150,6 @@ const NavigationMain = ({ isOpen, onRequestClose, onClick, classes, project, spr
                 <ListItemText primary="Team" />
                 </ListItem>
             </Link>}
-            {user.id == project.user_id, <Link to={`/app/projects/${project.id}/edit`}>
-              <ListItem button>
-                <ListItemIcon>
-                    <Star />
-                </ListItemIcon>
-                <ListItemText primary="Billing" />
-                </ListItem>
-            </Link>}
-
             <Divider />
           </div>
         }
