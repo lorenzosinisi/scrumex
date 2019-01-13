@@ -1,4 +1,4 @@
-defmodule Coherence.ConfirmationController do
+defmodule Scrumpointer.Coherence.ConfirmationController do
   @moduledoc """
   Handle confirmation actions.
 

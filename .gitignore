@@ -4,6 +4,9 @@
 /deps
 /.deliver
 /*.ez
+.elixir_ls
+/.elixir_ls
+.elixir_ls/*
 
 /.deliver
 
